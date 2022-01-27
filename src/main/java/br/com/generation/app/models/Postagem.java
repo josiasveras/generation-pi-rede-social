@@ -42,7 +42,10 @@ private String proposta;
 @JsonIgnoreProperties("postagem")
 private Tema tema;
 
-
+@ManyToOne
+@JoinColumn(name="fk_usuario")
+@JsonIgnoreProperties("postagem")
+private Usuario usuario;
 
 public long getIdPostagem() {
 	return idPostagem;
@@ -90,6 +93,14 @@ public Tema getTema() {
 
 public void setTema(Tema tema) {
 	this.tema = tema;
+}
+
+public Usuario getUsuario() {
+	return usuario;
+}
+
+public void setUsuario(Usuario usuario) {
+	this.usuario = usuario;
 }
 
 }
