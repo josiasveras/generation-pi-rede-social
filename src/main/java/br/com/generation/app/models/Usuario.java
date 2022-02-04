@@ -10,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name="tb_usuarios")
@@ -28,7 +31,9 @@ public class Usuario {
 	@Size(min=2, max=100)
 	private String nome;
 
-	@NotBlank
+	@Schema(example = "email@email.com.br")
+	@Email(message = "insira um email válido!")
+	@NotBlank (message = "Este campo é obrigatório")
 	@Size(min=2, max=100)
 	private String email;
 	
@@ -52,7 +57,7 @@ public class Usuario {
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem>postagem=new ArrayList<>();
 
-	public long getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
@@ -115,5 +120,7 @@ public class Usuario {
 	public void setPostagem(List<Postagem> postagem) {
 		this.postagem = postagem;
 	}
+
+	
 	
 }
