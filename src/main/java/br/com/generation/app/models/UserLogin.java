@@ -1,20 +1,34 @@
 package br.com.generation.app.models;
 
 public class UserLogin {
-
+	
 	private long id;
 	
 	private String nome;
-
+	
 	private String usuario;
-
+	
 	private String senha;
-
+	
 	private String token;
+	
+	private String foto;
 	
 	private String tipo;
 	
-	private String foto;
+	public UserLogin(long id,String nome, String usuario, String senha, String token, String foto, String tipo) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.token = token;
+		this.foto = foto;
+		this.tipo = tipo;
+	}
+
+	public UserLogin() {
+	
+	}
 
 	public long getId() {
 		return id;
@@ -56,14 +70,6 @@ public class UserLogin {
 		this.token = token;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public String getFoto() {
 		return foto;
 	}
@@ -71,5 +77,12 @@ public class UserLogin {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
-		
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 }

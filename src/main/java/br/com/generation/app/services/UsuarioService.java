@@ -14,40 +14,50 @@ import br.com.generation.app.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	public Usuario cadastrarUsuario(Usuario usuario) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		String senhaEncoder = encoder.encode(usuario.getSenha());
-		usuario.setSenha(senhaEncoder);
-		
-		return usuarioRepository.save(usuario);
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
+		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent()) {
+			return Optional.empty();
+			
+		} else {
+			usuario.setSenha(criptografarSenha(usuario.getSenha()));
+
+			return Optional.of(usuarioRepository.save(usuario));
+		}
 	}
-	
-	public Optional<UserLogin> logar(Optional<UserLogin> userLogin){ 
+
+	public Optional<UserLogin> logar(Optional<UserLogin> user){
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		
-		Optional<Usuario> usuario = usuarioRepository.findByEmail(userLogin.get().getUsuario());
-		
-		if (usuario.isPresent()) {
-			if (encoder.matches(userLogin.get().getSenha(), usuario.get().getSenha())) {
-				String auth = userLogin.get().getUsuario() + ":" + usuario.get().getSenha();
+		Optional<Usuario> usuario = usuarioRepository.findByUsuario(user.get().getUsuario());
+
+		if(usuario.isPresent()) {
+			if(encoder.matches(user.get().getSenha(), usuario.get().getSenha())) { 
+				String auth =  user.get().getUsuario() + ":" + user.get().getSenha();
 				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
-				String authHeader = "Basic" + new String(encodedAuth);
-				userLogin.get().setToken(authHeader);
-				userLogin.get().setNome(usuario.get().getNome());
-				userLogin.get().setId(usuario.get().getIdUsuario());
-				userLogin.get().setSenha(usuario.get().getSenha());
-				userLogin.get().setFoto(usuario.get().getFoto());
-				userLogin.get().setTipo(usuario.get().getTipo());
-				return userLogin;
+				String authHeader = "Basic " + new String(encodedAuth);
+				
+				user.get().setId(usuario.get().getId());
+				user.get().setNome(usuario.get().getNome());
+				user.get().setSenha(usuario.get().getSenha());
+				user.get().setToken(authHeader);
+				user.get().setFoto(usuario.get().getFoto());
+				user.get().setTipo(usuario.get().getTipo());
+				
+				return user;
 			}
 		}
-		
+
 		return null;
 	}
-}	
+	
+	private String criptografarSenha(String senha) {
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		return encoder.encode(senha);
+	}
+}

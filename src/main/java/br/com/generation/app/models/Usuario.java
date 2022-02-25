@@ -1,6 +1,5 @@
 package br.com.generation.app.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,29 +23,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class Usuario {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long idUsuario;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
-	@NotBlank
-	@Size(min=2, max=100)
+	@NotBlank(message = "Este campo é de preenchimento obrigatório")
+	@Size(min = 2 , max = 100, message = "Campo nome deve ter entre 2 e 100 caracteres")
 	private String nome;
-
-	@Schema(example = "email@email.com.br")
-	@Email(message = "insira um email válido!")
-	@NotBlank (message = "Este campo é obrigatório")
-	@Size(min=2, max=100)
-	private String email;
 	
-	@NotBlank
-	@Size(min=2, max=100)
+	@NotBlank(message = "Este campo é de preenchimento obrigatório")
+	@Email(message = "Insira um email válido")
+	@Schema(example = "email@email.com.br")
+	@Size(min = 2 , max = 100, message = "Campo usuário deve ter entre 2 e 100 caracteres")
+	private String usuario;
+
+	@NotBlank(message = "Este campo é de preenchimento obrigatório")
+	@Size(min = 5, message = "Campo senha deve ter no mínimo 5 caracteres")
 	private String senha;
 	
 	@NotBlank
 	@Size(min=2, max=100)
 	private String genero;
 	
-	@NotBlank
-	@Size(min=2, max=255)
 	private String foto;
 	
 	@NotBlank
@@ -55,16 +52,20 @@ public class Usuario {
 	
 	private String tipo;
 	
-	@OneToMany(mappedBy = "usuario",cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
-	private List<Postagem>postagem=new ArrayList<>();
+	private List<Postagem> postagem;
 
-	public Long getIdUsuario() {
-		return idUsuario;
+	public Usuario() {
+
 	}
 
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -75,12 +76,12 @@ public class Usuario {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getSenha() {
@@ -110,13 +111,6 @@ public class Usuario {
 	public String getBio() {
 		return bio;
 	}
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
 
 	public void setBio(String bio) {
 		this.bio = bio;
@@ -130,6 +124,11 @@ public class Usuario {
 		this.postagem = postagem;
 	}
 
-	
-	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 }

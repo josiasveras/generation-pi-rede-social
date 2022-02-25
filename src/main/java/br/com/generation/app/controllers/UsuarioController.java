@@ -3,6 +3,8 @@ package br.com.generation.app.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +42,11 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuario> Post(@RequestBody Usuario usuario){
-		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(usuarioService.cadastrarUsuario(usuario));
+	public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario){
+		
+		return usuarioService.cadastrarUsuario(usuario)
+			.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
+			.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
 	
 	@GetMapping("/buscar/tudo")
@@ -68,7 +72,7 @@ public class UsuarioController {
 	@GetMapping("/buscar/email/{emailUsuario}")
 	public ResponseEntity<Usuario> buscarUsuarioPorEmail(@PathVariable(value = "emailUsuario") String emailUsuario) {
 		
-		Optional<Usuario> usuario = usuarioRepository.findByEmail(emailUsuario);		
+		Optional<Usuario> usuario = usuarioRepository.findByUsuario(emailUsuario);		
 		if (usuario.isPresent()) {
 			return ResponseEntity.status(200).build();
 		} else {
@@ -78,7 +82,7 @@ public class UsuarioController {
 	
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> atualizarUsuario(@RequestBody Usuario usuario) {
-		return usuarioRepository.findById(usuario.getIdUsuario())
+		return usuarioRepository.findById(usuario.getId())
 				.map(resp -> ResponseEntity.status(200).body(usuarioRepository.save(usuario)))
 				.orElseGet(() -> {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id não encontrado");

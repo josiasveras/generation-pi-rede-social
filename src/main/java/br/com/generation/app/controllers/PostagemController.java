@@ -57,5 +57,4 @@ public class PostagemController {
 	public void delete(@PathVariable Long id) {
 		postagemRepository.deleteById(id);
 	}
-	
 }
