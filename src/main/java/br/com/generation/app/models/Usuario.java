@@ -53,6 +53,8 @@ public class Usuario {
 	@Size(min=2, max=255)
 	private String bio;
 	
+	private String tipo;
+	
 	@OneToMany(mappedBy = "usuario",cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem>postagem=new ArrayList<>();
@@ -107,6 +109,13 @@ public class Usuario {
 
 	public String getBio() {
 		return bio;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	public void setBio(String bio) {
