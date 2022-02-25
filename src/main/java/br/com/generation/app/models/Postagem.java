@@ -36,6 +36,10 @@ private Double  valor;
 @Size(min=2,max=500)
 private String proposta;
 
+@NotBlank
+@Size(min = 2, max = 100)
+private String localizacao;
+
 
 @ManyToOne
 @JoinColumn(name="fk_tema")
@@ -85,6 +89,14 @@ public String getProposta() {
 
 public void setProposta(String proposta) {
 	this.proposta = proposta;
+}
+
+public String getLocalizacao() {
+	return localizacao;
+}
+
+public void setLocalizacao(String localizacao) {
+	this.localizacao = localizacao;
 }
 
 public Tema getTema() {

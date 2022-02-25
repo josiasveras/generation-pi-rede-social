@@ -29,10 +29,6 @@ public class Tema {
 	
 	@NotBlank
 	@Size(min = 2, max = 100)
-	private String localizacao;
-	
-	@NotBlank
-	@Size(min = 2, max = 100)
 	private String descricao;
 	
 	@OneToMany(mappedBy = "tema",cascade = CascadeType.REMOVE)
@@ -59,13 +55,6 @@ public class Tema {
 		this.servico = servico;
 	}
 
-	public String getLocalizacao() {
-		return localizacao;
-	}
-
-	public void setLocalizacao(String localizacao) {
-		this.localizacao = localizacao;
-	}
 
 	public String getDescricao() {
 		return descricao;
