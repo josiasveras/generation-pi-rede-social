@@ -27,6 +27,7 @@ import br.com.generation.app.services.UsuarioService;
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+
 public class UsuarioController {
 	
 	@Autowired
