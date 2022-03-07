@@ -23,7 +23,7 @@ import br.com.generation.app.repositories.PostagemRepository;
 
 @RestController
 @RequestMapping("/postagens")
-@CrossOrigin ("*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostagemController {
 	@Autowired
 	private PostagemRepository postagemRepository;
