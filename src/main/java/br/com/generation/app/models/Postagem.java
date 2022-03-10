@@ -1,5 +1,7 @@
 package br.com.generation.app.models;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,14 +36,13 @@ private String conteudo;
 @NotNull
 private Double  valor;
 
-@NotBlank 
-@Size(min=2,max=500)
-private String proposta;
-
 @NotBlank
 @Size(min = 2, max = 100)
 private String localizacao;
 
+
+@Temporal(TemporalType.TIMESTAMP)
+private Date data  = new java.sql.Date(System.currentTimeMillis());
 
 @ManyToOne
 @JoinColumn(name="fk_tema")
@@ -83,13 +86,6 @@ public void setValor(Double valor) {
 	this.valor = valor;
 }
 
-public String getProposta() {
-	return proposta;
-}
-
-public void setProposta(String proposta) {
-	this.proposta = proposta;
-}
 
 public String getLocalizacao() {
 	return localizacao;
@@ -97,6 +93,14 @@ public String getLocalizacao() {
 
 public void setLocalizacao(String localizacao) {
 	this.localizacao = localizacao;
+}
+
+public Date getData() {
+	return data;
+}
+
+public void setData(Date data) {
+	this.data = data;
 }
 
 public Tema getTema() {
