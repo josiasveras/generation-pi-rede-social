@@ -37,6 +37,8 @@ public class Tema {
 	@JsonIgnoreProperties("tema")
 	private List<Postagem> postagem = new ArrayList<>(); 
 	
+	
+
 	public Tema() {
 		super();
 	}
@@ -64,5 +66,13 @@ public class Tema {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public List<Postagem> getPostagem() {
+		return postagem;
+	}
+
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
 	}
 }
