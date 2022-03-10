@@ -33,17 +33,13 @@ private String titulo;
 @Size(min=2,max=1300)
 private String conteudo;
 
+@NotNull
 private Double  valor;
-
-@NotBlank 
-@Size(min=2,max=500)
-private String proposta;
 
 @NotBlank
 @Size(min = 2, max = 100)
 private String localizacao;
 
-private String foto;
 
 @Temporal(TemporalType.TIMESTAMP)
 private Date data  = new java.sql.Date(System.currentTimeMillis());
@@ -90,13 +86,6 @@ public void setValor(Double valor) {
 	this.valor = valor;
 }
 
-public String getProposta() {
-	return proposta;
-}
-
-public void setProposta(String proposta) {
-	this.proposta = proposta;
-}
 
 public String getLocalizacao() {
 	return localizacao;
@@ -104,14 +93,6 @@ public String getLocalizacao() {
 
 public void setLocalizacao(String localizacao) {
 	this.localizacao = localizacao;
-}
-
-public String getFoto() {
-	return foto;
-}
-
-public void setFoto(String foto) {
-	this.foto = foto;
 }
 
 public Date getData() {
